@@ -113,7 +113,14 @@ app-message-list {
   align-items: center;
 }
 
-.icon-btn {
+/* Improved styling for action buttons */
+.chat-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Add consistent spacing between buttons */
+}
+
+.action-btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -122,17 +129,52 @@ app-message-list {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 10px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
+  color: #6b7280;
   
   &:hover {
     background-color: #e5e7eb;
+    color: #4b5563;
+  }
+  
+  &:active {
+    transform: scale(0.95);
   }
   
   i {
     font-size: 16px;
-    color: #6b7280;
+  }
+  
+  /* Specific colors for different actions */
+  &.call-btn {
+    i {
+      color: #10b981; /* Green for call */
+    }
+    
+    &:hover {
+      background-color: rgba(16, 185, 129, 0.1);
+    }
+  }
+  
+  &.video-btn {
+    i {
+      color: #6366f1; /* Purple for video */
+    }
+    
+    &:hover {
+      background-color: rgba(99, 102, 241, 0.1);
+    }
+  }
+  
+  &.info-btn {
+    i {
+      color: #6b7280; /* Gray for info */
+    }
+    
+    &:hover {
+      background-color: rgba(107, 114, 128, 0.1);
+    }
   }
 }
 
@@ -210,6 +252,7 @@ app-message-list {
   color: #6366f1;
   margin-bottom: 20px;
 }
+
 
 
 
