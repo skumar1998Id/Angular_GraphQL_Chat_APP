@@ -1,8 +1,8 @@
 <div class="chat-container" *ngIf="currentUser">
   <div class="sidebar">
     <div class="user-info">
-      <div class="user-avatar">{{ currentUser.name.charAt(0) }}</div>
-      <h3>{{ currentUser.name }}</h3>
+      <div class="user-avatar">{{ currentUser.name?.charAt(0) || 'U' }}</div>
+      <h3>{{ currentUser.name || 'User' }}</h3>
       <button class="logout-btn" (click)="logout()">
         <i class="fas fa-sign-out-alt"></i>
       </button>
@@ -18,39 +18,44 @@
     </app-contact-list>
   </div>
   
-  <div class="chat-main">
-    <div *ngIf="selectedContact; else selectUserPrompt" class="chat-area">
-      <div class="chat-header">
-        <div class="contact-info">
-          <div class="contact-avatar">{{ selectedContact.name.charAt(0) }}</div>
-          <div class="contact-details">
-            <h3>{{ selectedContact.name }}</h3>
-            <span class="status" [class.online]="selectedContact.isOnline">
-              {{ selectedContact.isOnline ? 'Online' : 'Offline' }}
-            </span>
-          </div>
-        </div>
-        <div class="header-actions">
-          <button class="icon-btn"><i class="fas fa-phone"></i></button>
-          <button class="icon-btn"><i class="fas fa-video"></i></button>
-          <button class="icon-btn"><i class="fas fa-ellipsis-v"></i></button>
+  <div class="chat-area">
+    <div *ngIf="selectedContact; else selectUserPrompt" class="chat-header">
+      <div class="contact-info">
+        <div class="contact-avatar">{{ selectedContact.name?.charAt(0) || 'C' }}</div>
+        <div class="contact-details">
+          <h3>{{ selectedContact.name || 'Contact' }}</h3>
+          <span class="status" [class.online]="selectedContact.isOnline">
+            {{ selectedContact.isOnline ? 'Online' : 'Offline' }}
+          </span>
         </div>
       </div>
-      
-      <div class="messages-container">
-        <app-message-list 
-          [messages]="messages" 
-          [currentUser]="currentUser">
-        </app-message-list>
+      <div class="chat-actions">
+        <button class="action-btn">
+          <i class="fas fa-phone"></i>
+        </button>
+        <button class="action-btn">
+          <i class="fas fa-video"></i>
+        </button>
+        <button class="action-btn">
+          <i class="fas fa-info-circle"></i>
+        </button>
       </div>
-      
-      <div class="input-container">
-        <app-message-input 
-          [currentUser]="currentUser" 
-          [selectedContact]="selectedContact"
-          (messageSent)="sendMessage($event)">
-        </app-message-input>
-      </div>
+    </div>
+    
+    <div *ngIf="selectedContact" class="messages-container">
+      <app-message-list 
+        [messages]="messages" 
+        [currentUser]="currentUser">
+      </app-message-list>
+    </div>
+    
+    <div *ngIf="selectedContact" class="input-container">
+      <app-message-input 
+        [currentUser]="currentUser" 
+        [selectedContact]="selectedContact"
+        (messageSent)="sendMessage($event)"
+        (fileSent)="sendFileMessage($event)">
+      </app-message-input>
     </div>
     
     <ng-template #selectUserPrompt>
@@ -64,6 +69,12 @@
     </ng-template>
   </div>
 </div>
+
+
+
+
+
+
 
 
 

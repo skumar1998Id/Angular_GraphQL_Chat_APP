@@ -11,6 +11,8 @@ type Message {
     content: String!
     timestamp: Float!
     read: Boolean!
+    fileUrl: String
+    fileType: String
 }
 
 type Query {
@@ -23,7 +25,7 @@ type Query {
 
 type Mutation {
     createUser(name: String!): User!
-    sendMessage(senderId: ID!, receiverId: ID!, content: String!): Message!
+    sendMessage(senderId: ID!, receiverId: ID!, content: String!, fileUrl: String, fileType: String): Message!
     markMessageAsRead(messageId: ID!, userId: ID!): Boolean!
     setTypingStatus(userId: ID!, receiverId: ID!, isTyping: Boolean!): Boolean!
 }
@@ -31,6 +33,7 @@ type Mutation {
 type Subscription {
     onNewMessage(receiverId: ID!): Message!
 }
+
 
 
 

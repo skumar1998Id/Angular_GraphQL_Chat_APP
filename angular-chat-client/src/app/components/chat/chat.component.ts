@@ -109,6 +109,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Add this method to handle text messages
   sendMessage(content: string): void {
     if (this.currentUser && this.selectedContact) {
       const message: Message = {
@@ -130,6 +131,42 @@ export class ChatComponent implements OnInit, OnDestroy {
     console.log('Testing notification');
     this.notificationService.testNotification();
   }
+
+  // Add this method to handle file messages
+  sendFileMessage(data: {content: string, file: File}): void {
+    if (this.currentUser && this.selectedContact) {
+      // First upload the file
+      this.chatService.uploadFile(data.file).subscribe({
+        next: (fileUrl) => {
+          // Then send the message with the file URL
+          const message: Message = {
+            senderId: this.currentUser!.id,
+            receiverId: this.selectedContact!.id,
+            content: data.content,
+            timestamp: new Date().toISOString(),
+            read: false,
+            fileUrl: fileUrl,
+            fileType: data.file.type
+          };
+          this.chatService.sendMessage(message);
+        },
+        error: (error) => {
+          console.error('Error uploading file:', error);
+          // Show error message to user
+          alert('Failed to upload file. Please try again.');
+        }
+      });
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
 
 

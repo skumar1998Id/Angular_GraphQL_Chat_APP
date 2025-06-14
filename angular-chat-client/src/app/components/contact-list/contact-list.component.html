@@ -4,7 +4,7 @@
        [class.selected]="selectedContact?.id === contact.id"
        [class.has-unread]="hasUnreadMessages(contact.id)"
        (click)="selectContact(contact)">
-    <div class="contact-avatar">{{ contact.name.charAt(0) }}</div>
+    <div class="contact-avatar">{{ contact.name?.charAt(0) || 'C' }}</div>
     <div class="contact-info">
       <div class="contact-name">{{ contact.name }}</div>
       <div class="contact-status" [class.online]="contact.isOnline">
@@ -16,4 +16,5 @@
     </div>
   </div>
 </div>
+
 

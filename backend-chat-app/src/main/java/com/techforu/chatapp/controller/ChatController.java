@@ -47,8 +47,18 @@ public class ChatController {
     }
     
     @MutationMapping
-    public Message sendMessage(@Argument Long senderId, @Argument Long receiverId, @Argument String content) {
-        return messageService.sendMessage(senderId, receiverId, content);
+    public Message sendMessage(
+        @Argument Long senderId, 
+        @Argument Long receiverId, 
+        @Argument String content,
+        @Argument(name = "fileUrl", value = "") String fileUrl,
+        @Argument(name = "fileType", value = "") String fileType
+    ) {
+        if (fileUrl != null && !fileUrl.isEmpty()) {
+            return messageService.sendMessage(senderId, receiverId, content, fileUrl, fileType);
+        } else {
+            return messageService.sendMessage(senderId, receiverId, content);
+        }
     }
     
     @MutationMapping
@@ -78,5 +88,6 @@ public class ChatController {
         return userService.findUserByName(name);
     }
 }
+
 
 

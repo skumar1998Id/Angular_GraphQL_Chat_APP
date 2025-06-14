@@ -32,13 +32,15 @@ public class MessageService {
         return messageRepository.findMessagesBetweenUsers(senderId, receiverId);
     }
     
-    public Message sendMessage(Long senderId, Long receiverId, String content) {
+    public Message sendMessage(Long senderId, Long receiverId, String content, String fileUrl, String fileType) {
         Message message = new Message();
         message.setSenderId(senderId);
         message.setReceiverId(receiverId);
         message.setContent(content);
         message.setTimestamp(System.currentTimeMillis());
         message.setRead(false);
+        message.setFileUrl(fileUrl);
+        message.setFileType(fileType);
         
         Message savedMessage = messageRepository.save(message);
         
@@ -53,6 +55,11 @@ public class MessageService {
         messageStreams.get(key).tryEmitNext(savedMessage);
         
         return savedMessage;
+    }
+    
+    // Overload for backward compatibility
+    public Message sendMessage(Long senderId, Long receiverId, String content) {
+        return sendMessage(senderId, receiverId, content, null, null);
     }
     
     public void markMessageAsRead(Long messageId, Long userId) {
@@ -115,12 +122,5 @@ public class MessageService {
         return messageStreams.get(key).asFlux();
     }
 }
-
-
-
-
-
-
-
 
 

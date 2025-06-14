@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { Message } from '../models/message.model';
 import { environment } from '../../environments/environment';
@@ -268,12 +268,15 @@ export class ChatService {
   
   // Method to send message
   sendMessage(message: Message): void {
+    const fileUrlPart = message.fileUrl ? `, fileUrl: "${message.fileUrl}"` : '';
+    const fileTypePart = message.fileType ? `, fileType: "${message.fileType}"` : '';
+    
     const query = `
       mutation {
         sendMessage(
           senderId: ${message.senderId}, 
           receiverId: ${message.receiverId}, 
-          content: "${message.content}"
+          content: "${message.content.replace(/"/g, '\\"')}"${fileUrlPart}${fileTypePart}
         ) {
           id
           senderId
@@ -281,9 +284,12 @@ export class ChatService {
           content
           timestamp
           read
+          fileUrl
+          fileType
         }
       }
     `;
+    
     this.http.post(`${environment.apiUrl}`, { query }).subscribe(
       (response: any) => {
         console.log('Message sent:', response);
@@ -371,6 +377,20 @@ export class ChatService {
         console.log('Sent activity update for user', userId);
       }
     }, 30000);
+  }
+
+  uploadFile(file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    return this.http.post<{url: string}>(`${environment.apiUrl.replace('/graphql', '')}/api/upload`, formData)
+      .pipe(
+        map(response => response.url),
+        catchError(error => {
+          console.error('Error uploading file', error);
+          return throwError(() => new Error('File upload failed'));
+        })
+      );
   }
 }
 

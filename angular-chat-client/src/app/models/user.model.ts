@@ -1,8 +1,9 @@
 export interface User {
   id: number;
-  name: string;
-  email?: string;
+  name: string | null | undefined;
   isOnline?: boolean;
-  lastSeen?: string;
-  avatar?: string;
 }
+
+
+
+

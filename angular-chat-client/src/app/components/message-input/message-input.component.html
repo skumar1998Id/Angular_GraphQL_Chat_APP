@@ -9,24 +9,69 @@
     <span>{{ selectedContact?.name }} is typing...</span>
   </div>
 
+  <!-- Emoji picker -->
+  <div *ngIf="showEmojiPicker" class="emoji-picker-container" #emojiPickerContainer>
+    <emoji-mart 
+      [darkMode]="false" 
+      [perLine]="emojiPickerOptions.perLine"
+      [showPreview]="false"
+      [showCategoryNames]="false"
+      [showSkinTones]="emojiPickerOptions.showSkinTones"
+      [showSearch]="false"
+      [emojiSize]="emojiPickerOptions.emojiSize"
+      [i18n]="emojiPickerOptions.i18n"
+      [set]="'apple'"
+      (emojiSelect)="addEmoji($event)">
+    </emoji-mart>
+  </div>
+
   <div class="input-area">
-    <button class="attachment-btn">
+    <label class="attachment-btn">
       <i class="fas fa-paperclip"></i>
+      <input type="file" (change)="onFileSelected($event)" hidden>
+    </label>
+    
+    <button class="emoji-btn" (click)="toggleEmojiPicker()" #emojiButton>
+      <i class="fas fa-smile"></i>
     </button>
+    
     <textarea 
-      [(ngModel)]="messageContent" 
+      #messageInput
+      [(ngModel)]="message" 
       placeholder="Type a message..." 
       (keydown.enter)="$event.preventDefault(); sendMessage()"
       (input)="onTyping()">
     </textarea>
+    
     <button 
       class="send-btn" 
-      [class.active]="messageContent.trim()" 
-      [disabled]="!messageContent.trim()" 
+      [class.active]="message.trim() || selectedFile" 
+      [disabled]="!message.trim() && !selectedFile" 
       (click)="sendMessage()">
       <i class="fas fa-paper-plane"></i>
     </button>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

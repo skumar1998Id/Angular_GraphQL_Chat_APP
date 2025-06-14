@@ -1,26 +1,22 @@
-<div class="message-list" #scrollContainer>
+<div class="message-list">
   <div *ngIf="messages.length === 0" class="no-messages">
     <p>No messages yet. Start the conversation!</p>
   </div>
   
-  <div *ngFor="let message of messages; let i = index" 
-       class="message-wrapper"
+  <div *ngFor="let message of messages" 
+       class="message" 
        [class.sent]="message.senderId === currentUser?.id"
-       [class.received]="message.senderId !== currentUser?.id"
-       [class.first-in-group]="isFirstMessageOfGroup(message, i)"
-       [class.last-in-group]="isLastMessageOfGroup(message, i)">
-    
-    <div class="message">
-      <div class="message-content">{{ message.content }}</div>
-      <div class="message-info">
-        <span class="message-time">{{ formatTime(message.timestamp) }}</span>
-        <span *ngIf="message.senderId === currentUser?.id" class="message-status">
-          <i class="fa" [ngClass]="{'fa-check': !message.read, 'fa-check-double': message.read}"></i>
-        </span>
+       [class.received]="message.senderId !== currentUser?.id">
+    <div class="message-content">
+      {{ message.content }}
+      <div *ngIf="message.fileUrl" class="file-attachment">
+        <a [href]="message.fileUrl" target="_blank">
+          <i class="fas fa-file"></i> Attachment
+        </a>
       </div>
     </div>
+    <div class="message-time">
+      {{ message.timestamp | date:'short' }}
+    </div>
   </div>
-</div>
-
-
 

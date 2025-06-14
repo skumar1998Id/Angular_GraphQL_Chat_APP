@@ -41,7 +41,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -52,7 +52,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/skumar1998Id/ChatApp.git",
+    "url": "https://github.com/skumar1998Id/Angular_GraphQL_Chat_APP.git",
     "accountId": "8444d42e-a6c4-4d6a-9b27-8e45109b99cc"
   }
 }]]></component>
@@ -77,6 +77,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "D:/PERSONAL/chat/ChatApp",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -111,7 +112,7 @@
       <updated>1749891870232</updated>
       <workItem from="1749891872090" duration="21000" />
       <workItem from="1749892296465" duration="1179000" />
-      <workItem from="1749894033685" duration="393000" />
+      <workItem from="1749894033685" duration="443000" />
     </task>
     <servers />
   </component>
