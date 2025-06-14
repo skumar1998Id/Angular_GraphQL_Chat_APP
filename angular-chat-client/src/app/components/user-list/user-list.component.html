@@ -1,0 +1,20 @@
+<div class="user-list-container">
+  <div *ngIf="displayedContacts.length === 0" class="no-contacts">
+    <i class="fas fa-users"></i>
+    <p>No contacts yet</p>
+  </div>
+  <ul>
+    <li *ngFor="let contact of displayedContacts" 
+        (click)="onSelectContact(contact)"
+        [class.selected]="selectedContact?.id === contact.id">
+      <div class="contact-avatar">{{ contact.name.charAt(0) }}</div>
+      <div class="contact-info">
+        <div class="contact-name">{{ contact.name }}</div>
+        <div class="contact-preview">Click to start chatting</div>
+      </div>
+      <div class="contact-meta">
+        <div class="status-indicator" [class.online]="contact.isOnline"></div>
+      </div>
+    </li>
+  </ul>
+</div>

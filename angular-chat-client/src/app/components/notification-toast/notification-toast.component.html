@@ -1,0 +1,15 @@
+<div class="notification-container">
+  <div *ngFor="let notification of notifications" 
+       class="notification-toast"
+       [@toastAnimation]="notification.state">
+    <div class="notification-content">
+      <div class="notification-header">
+        <span class="notification-title">New Message</span>
+        <span class="notification-close" (click)="notification.state = 'hidden'">&times;</span>
+      </div>
+      <div class="notification-body">
+        <div class="notification-message">{{ notification.message.content }}</div>
+      </div>
+    </div>
+  </div>
+</div>

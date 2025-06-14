@@ -1,0 +1,32 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Chat Login</h2>
+    <p class="subtitle">Enter your username to continue</p>
+    
+    <div class="form-group">
+      <input 
+        type="text" 
+        [(ngModel)]="username" 
+        placeholder="Username" 
+        [disabled]="isLoading"
+        (keydown.enter)="loginUser()"
+        autofocus>
+    </div>
+    
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+      <div *ngIf="userNotFound" class="create-user-prompt">
+        <span>Do you want to create a new user?</span>
+        <button (click)="createNewUser()">Create User</button>
+      </div>
+    </div>
+    
+    <button 
+      class="login-btn" 
+      [disabled]="!username.trim() || isLoading" 
+      (click)="loginUser()">
+      <span *ngIf="isLoading" class="spinner"></span>
+      <span *ngIf="!isLoading">Login</span>
+    </button>
+  </div>
+</div>

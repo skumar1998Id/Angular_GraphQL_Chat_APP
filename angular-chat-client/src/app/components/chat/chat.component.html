@@ -1,0 +1,70 @@
+<div class="chat-container" *ngIf="currentUser">
+  <div class="sidebar">
+    <div class="user-info">
+      <div class="user-avatar">{{ currentUser.name.charAt(0) }}</div>
+      <h3>{{ currentUser.name }}</h3>
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="Search contacts...">
+      <i class="fas fa-search"></i>
+    </div>
+    <app-contact-list 
+      [contacts]="contacts" 
+      [selectedContact]="selectedContact"
+      (contactSelected)="onContactSelected($event)">
+    </app-contact-list>
+  </div>
+  
+  <div class="chat-main">
+    <div *ngIf="selectedContact; else selectUserPrompt" class="chat-area">
+      <div class="chat-header">
+        <div class="contact-info">
+          <div class="contact-avatar">{{ selectedContact.name.charAt(0) }}</div>
+          <div class="contact-details">
+            <h3>{{ selectedContact.name }}</h3>
+            <span class="status" [class.online]="selectedContact.isOnline">
+              {{ selectedContact.isOnline ? 'Online' : 'Offline' }}
+            </span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn"><i class="fas fa-phone"></i></button>
+          <button class="icon-btn"><i class="fas fa-video"></i></button>
+          <button class="icon-btn"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+      </div>
+      
+      <div class="messages-container">
+        <app-message-list 
+          [messages]="messages" 
+          [currentUser]="currentUser">
+        </app-message-list>
+      </div>
+      
+      <div class="input-container">
+        <app-message-input 
+          [currentUser]="currentUser" 
+          [selectedContact]="selectedContact"
+          (messageSent)="sendMessage($event)">
+        </app-message-input>
+      </div>
+    </div>
+    
+    <ng-template #selectUserPrompt>
+      <div class="welcome-screen">
+        <div class="welcome-icon">
+          <i class="fas fa-comments"></i>
+        </div>
+        <h2>Welcome to Chat App</h2>
+        <p>Select a contact to start chatting</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+
+
+

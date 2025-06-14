@@ -1,0 +1,36 @@
+type User {
+    id: ID!
+    name: String!
+    isOnline: Boolean!
+}
+
+type Message {
+    id: ID!
+    senderId: ID!
+    receiverId: ID!
+    content: String!
+    timestamp: Float!
+    read: Boolean!
+}
+
+type Query {
+    users: [User!]!
+    user(id: ID!): User
+    userByName(name: String!): User
+    contacts(userId: ID!): [User!]!
+    messages(senderId: ID!, receiverId: ID!): [Message!]!
+}
+
+type Mutation {
+    createUser(name: String!): User!
+    sendMessage(senderId: ID!, receiverId: ID!, content: String!): Message!
+    markMessageAsRead(messageId: ID!, userId: ID!): Boolean!
+    setTypingStatus(userId: ID!, receiverId: ID!, isTyping: Boolean!): Boolean!
+}
+
+type Subscription {
+    onNewMessage(receiverId: ID!): Message!
+}
+
+
+

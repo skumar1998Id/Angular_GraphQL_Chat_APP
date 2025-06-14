@@ -1,0 +1,34 @@
+<div class="add-user-container">
+  <h2>Create New User</h2>
+  
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input 
+      type="text" 
+      id="username" 
+      [(ngModel)]="username" 
+      placeholder="Enter username" 
+      [disabled]="isLoading"
+      autofocus>
+  </div>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <div class="button-group">
+    <button 
+      class="cancel-btn" 
+      (click)="cancel()" 
+      [disabled]="isLoading">
+      Cancel
+    </button>
+    <button 
+      class="create-btn" 
+      (click)="addUser()" 
+      [disabled]="!username.trim() || isLoading">
+      <span *ngIf="isLoading" class="spinner-small"></span>
+      <span *ngIf="!isLoading">Create User</span>
+    </button>
+  </div>
+</div>

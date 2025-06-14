@@ -1,0 +1,19 @@
+<div class="contact-list">
+  <div *ngFor="let contact of contacts" 
+       class="contact-item" 
+       [class.selected]="selectedContact?.id === contact.id"
+       [class.has-unread]="hasUnreadMessages(contact.id)"
+       (click)="selectContact(contact)">
+    <div class="contact-avatar">{{ contact.name.charAt(0) }}</div>
+    <div class="contact-info">
+      <div class="contact-name">{{ contact.name }}</div>
+      <div class="contact-status" [class.online]="contact.isOnline">
+        {{ contact.isOnline ? 'Online' : 'Offline' }}
+      </div>
+    </div>
+    <div *ngIf="hasUnreadMessages(contact.id)" class="unread-badge">
+      {{ getUnreadCount(contact.id) }}
+    </div>
+  </div>
+</div>
+

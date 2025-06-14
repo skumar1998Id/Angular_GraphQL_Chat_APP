@@ -1,0 +1,32 @@
+<div class="message-input-container">
+  <!-- Typing indicator -->
+  <div *ngIf="isContactTyping" class="typing-indicator">
+    <div class="typing-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <span>{{ selectedContact?.name }} is typing...</span>
+  </div>
+
+  <div class="input-area">
+    <button class="attachment-btn">
+      <i class="fas fa-paperclip"></i>
+    </button>
+    <textarea 
+      [(ngModel)]="messageContent" 
+      placeholder="Type a message..." 
+      (keydown.enter)="$event.preventDefault(); sendMessage()"
+      (input)="onTyping()">
+    </textarea>
+    <button 
+      class="send-btn" 
+      [class.active]="messageContent.trim()" 
+      [disabled]="!messageContent.trim()" 
+      (click)="sendMessage()">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
+</div>
+
+

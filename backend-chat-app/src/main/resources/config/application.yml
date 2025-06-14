@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: chatapp
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/chatapp?createDatabaseIfNotExist=true
+    username: root
+    password: "@Dmin2089!"
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # This will automatically create/update tables
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+    show-sql: true
+
+  sql:
+    init:
+      mode: always
+
+  graphql:
+    graphiql:
+      enabled: true
+    websocket:
+      path: /graphql
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1a74bf46-5a31-40bb-9b09-1e2e954ae0ff" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/example/chatapp/config/GraphQLConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/ChatappApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/config/GraphQLConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/config/SchedulingConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/config/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/config/WebSocketEventListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/controller/ChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/controller/WebSocketChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/exception/UserNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/model/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/repository/MessageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/service/MessageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/java/com/techforu/chatapp/service/UserStatusService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/resources/config/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/main/resources/graphql/schema.graphqls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-chat-app/src/test/java/com/techforu/chatapp/ChatappApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;skumar1998Id&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/skumar1998Id/ChatApp.git",
+    "accountId": "8444d42e-a6c4-4d6a-9b27-8e45109b99cc"
+  }
+}]]></component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2yUazY2cIhBz4wciXauzucZCcLm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "D:/PERSONAL/chat/ChatApp",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ]
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26094.121" />
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-IU-251.26094.121" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1a74bf46-5a31-40bb-9b09-1e2e954ae0ff" name="Changes" comment="" />
+      <created>1749891870232</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749891870232</updated>
+      <workItem from="1749891872090" duration="21000" />
+      <workItem from="1749892296465" duration="1179000" />
+      <workItem from="1749894033685" duration="393000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+      <path value="$PROJECT_DIR$" />
+      <path value="$PROJECT_DIR$/backend-chat-app" />
+    </ignored-roots>
+  </component>
+</project>
