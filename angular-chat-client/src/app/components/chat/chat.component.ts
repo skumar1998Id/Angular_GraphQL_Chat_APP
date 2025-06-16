@@ -134,10 +134,28 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   // Add this method to handle file messages
   sendFileMessage(data: {content: string, file: File}): void {
+    console.log('Sending file message:', data.content, data.file);
+    
     if (this.currentUser && this.selectedContact) {
       // First upload the file
       this.chatService.uploadFile(data.file).subscribe({
         next: (fileUrl) => {
+          console.log('File uploaded successfully, URL:', fileUrl);
+          
+          if (!fileUrl) {
+            console.error('File URL is empty or undefined');
+            // Use console.error instead of non-existent notification method
+            console.error('Error: File upload failed');
+            return;
+          }
+          
+          // Make sure the URL is absolute
+          const absoluteUrl = fileUrl.startsWith('http') ? 
+            fileUrl : 
+            `${window.location.origin}${fileUrl.startsWith('/') ? '' : '/'}${fileUrl}`;
+          
+          console.log('Absolute file URL:', absoluteUrl);
+          
           // Then send the message with the file URL
           const message: Message = {
             senderId: this.currentUser!.id,
@@ -145,17 +163,21 @@ export class ChatComponent implements OnInit, OnDestroy {
             content: data.content,
             timestamp: new Date().toISOString(),
             read: false,
-            fileUrl: fileUrl,
+            fileUrl: absoluteUrl,
             fileType: data.file.type
           };
+          
+          console.log('Sending message with file:', message);
           this.chatService.sendMessage(message);
         },
         error: (error) => {
           console.error('Error uploading file:', error);
-          // Show error message to user
-          alert('Failed to upload file. Please try again.');
+          // Use console.error instead of non-existent notification method
+          console.error('Failed to upload file. Please try again.');
         }
       });
+    } else {
+      console.error('Cannot send file: currentUser or selectedContact is null');
     }
   }
 }

@@ -100,5 +100,26 @@ export class NotificationService {
     this.notificationSubject.next(testMessage);
     this.playNotificationSound();
   }
+
+  showNotification(message: string, type: string = 'info'): void {
+    // Create a temporary message object for notification
+    const notificationMessage: Message = {
+      id: 999,
+      senderId: 0,
+      receiverId: this.currentUserId || 0,
+      content: message,
+      timestamp: new Date().toISOString(),
+      read: false
+    };
+    
+    // Send notification
+    this.notificationSubject.next(notificationMessage);
+    
+    // Play sound for important notifications
+    if (type === 'error') {
+      this.playNotificationSound();
+    }
+  }
 }
+
 

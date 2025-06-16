@@ -136,17 +136,11 @@ export class MessageInputComponent implements OnInit {
   }
   
   onFileSelected(event: any): void {
-    console.log('File input triggered', event);
     if (event.target.files && event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
-      if (this.selectedFile) {
-        console.log('File selected:', this.selectedFile.name);
-      }
-    } else {
-      console.log('No file selected or file selection canceled');
     }
   }
-  
+
   removeFile(): void {
     this.selectedFile = null;
   }
@@ -158,11 +152,14 @@ export class MessageInputComponent implements OnInit {
         content: this.message.trim() || 'Attachment',
         file: this.selectedFile
       });
-      this.resetForm();
-    } else if (this.message.trim() && this.currentUser && this.selectedContact) {
+      this.message = '';
+      this.selectedFile = null;
+      this.showEmojiPicker = false;
+    } else if (this.message.trim()) {
       // Send text-only message
       this.messageSent.emit(this.message.trim());
-      this.resetForm();
+      this.message = '';
+      this.showEmojiPicker = false;
     }
   }
   

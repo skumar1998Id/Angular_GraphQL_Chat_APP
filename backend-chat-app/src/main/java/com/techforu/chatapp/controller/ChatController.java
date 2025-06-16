@@ -43,6 +43,15 @@ public class ChatController {
     @QueryMapping
     public List<Message> messages(@Argument Long senderId, @Argument Long receiverId) {
         List<Message> messages = messageService.getMessagesBetweenUsers(senderId, receiverId);
+        System.out.println("Fetched messages: " + messages.size());
+        
+        // Debug: Print file URLs
+        for (Message msg : messages) {
+            if (msg.getFileUrl() != null && !msg.getFileUrl().isEmpty()) {
+                System.out.println("Message with file: " + msg.getId() + ", URL: " + msg.getFileUrl());
+            }
+        }
+        
         return messages != null ? messages : Collections.emptyList();
     }
     
@@ -88,6 +97,7 @@ public class ChatController {
         return userService.findUserByName(name);
     }
 }
+
 
 
 

@@ -252,6 +252,8 @@ export class ChatService {
           content
           timestamp
           read
+          fileUrl
+          fileType
         }
       }
     `;
@@ -268,6 +270,8 @@ export class ChatService {
   
   // Method to send message
   sendMessage(message: Message): void {
+    console.log('Sending message with full details:', JSON.stringify(message, null, 2));
+    
     const fileUrlPart = message.fileUrl ? `, fileUrl: "${message.fileUrl}"` : '';
     const fileTypePart = message.fileType ? `, fileType: "${message.fileType}"` : '';
     
@@ -290,14 +294,19 @@ export class ChatService {
       }
     `;
     
+    console.log('GraphQL query:', query);
+    
     this.http.post(`${environment.apiUrl}`, { query }).subscribe(
       (response: any) => {
-        console.log('Message sent:', response);
+        console.log('Message sent response:', JSON.stringify(response, null, 2));
         // Reload messages to include the new one
         this.loadMessages(message.senderId, message.receiverId);
       },
       error => {
-        console.error('Error sending message', error);
+        console.error('Error sending message (detailed):', error);
+        console.error('Error status:', error.status);
+        console.error('Error message:', error.message);
+        console.error('Error response:', error.error);
       }
     );
   }
@@ -379,16 +388,36 @@ export class ChatService {
     }, 30000);
   }
 
+  // Try a different API endpoint based on the backend structure
   uploadFile(file: File): Observable<string> {
+    console.log('Starting file upload with file:', file.name, file.type, file.size);
     const formData = new FormData();
     formData.append('file', file);
     
-    return this.http.post<{url: string}>(`${environment.apiUrl.replace('/graphql', '')}/api/upload`, formData)
+    // Use the correct endpoint
+    const uploadUrl = `${environment.apiUrl.replace('/graphql', '')}/api/files/upload`;
+    
+    console.log('Using upload URL:', uploadUrl);
+    
+    return this.http.post<any>(uploadUrl, formData)
       .pipe(
-        map(response => response.url),
+        tap(response => console.log('Upload response:', response)),
+        map(response => {
+          // Handle different response formats
+          const fileUrl = response.fileUrl || response.url || response.path || 
+                          (typeof response === 'string' ? response : null);
+          
+          if (!fileUrl) {
+            console.error('No file URL found in response:', response);
+            throw new Error('Invalid server response: No file URL');
+          }
+          
+          console.log('Final file URL:', fileUrl);
+          return fileUrl;
+        }),
         catchError(error => {
-          console.error('Error uploading file', error);
-          return throwError(() => new Error('File upload failed'));
+          console.error('Upload error:', error);
+          return throwError(() => error);
         })
       );
   }
