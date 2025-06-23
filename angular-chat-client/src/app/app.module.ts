@@ -12,6 +12,8 @@ import { ContactListComponent } from './components/contact-list/contact-list.com
 import { MessageListComponent } from './components/message-list/message-list.component';
 import { MessageInputComponent } from './components/message-input/message-input.component';
 import { LoginComponent } from './components/login/login.component';
+import { SettingsComponent } from './components/settings/settings.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { LoginComponent } from './components/login/login.component';
     ContactListComponent,
     MessageListComponent,
     MessageInputComponent,
-    LoginComponent
+    LoginComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

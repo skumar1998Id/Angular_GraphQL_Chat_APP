@@ -13,21 +13,32 @@ type Message {
     read: Boolean!
     fileUrl: String
     fileType: String
+    fileName: String
+    isEncrypted: Boolean
+    encryptedContent: String
+    encryptedAESKey: String
+    iv: String
+    signature: String
 }
 
 type Query {
     users: [User!]!
     user(id: ID!): User
     userByName(name: String!): User
+    usersForUser(userId: ID!): [User!]!
     contacts(userId: ID!): [User!]!
     messages(senderId: ID!, receiverId: ID!): [Message!]!
+    blockedUsers(userId: ID!): [User!]!
+    isUserBlocked(blockerId: ID!, blockedId: ID!): Boolean!
 }
 
 type Mutation {
     createUser(name: String!): User!
-    sendMessage(senderId: ID!, receiverId: ID!, content: String!, fileUrl: String, fileType: String): Message!
+    sendMessage(senderId: ID!, receiverId: ID!, content: String!, fileUrl: String, fileType: String, fileName: String): Message!
     markMessageAsRead(messageId: ID!, userId: ID!): Boolean!
     setTypingStatus(userId: ID!, receiverId: ID!, isTyping: Boolean!): Boolean!
+    blockUser(blockerId: ID!, blockedId: ID!, reason: String): Boolean!
+    unblockUser(blockerId: ID!, blockedId: ID!): Boolean!
 }
 
 type Subscription {

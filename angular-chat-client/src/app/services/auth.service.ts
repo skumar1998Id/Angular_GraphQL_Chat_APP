@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, of } from 'rxjs';
-import { map, tap, catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject, of, from } from 'rxjs';
+import { map, tap, catchError, switchMap } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { environment } from '../../environments/environment';
 import { ChatService } from './chat.service';
@@ -51,17 +51,7 @@ export class AuthService {
   }
   
   createUser(name: string): Observable<any> {
-    const query = `
-      mutation {
-        createUser(name: "${name.replace(/"/g, '\\"')}") {
-          id
-          name
-          isOnline
-        }
-      }
-    `;
-    
-    return this.http.post(`${environment.apiUrl}`, { query }).pipe(
+    return this.chatService.createUser(name).pipe(
       map((response: any) => {
         if (response.data?.createUser) {
           return response.data.createUser;

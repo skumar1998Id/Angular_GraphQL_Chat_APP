@@ -149,7 +149,7 @@ export class MessageInputComponent implements OnInit {
     if (this.selectedFile) {
       // Send message with file
       this.fileSent.emit({
-        content: this.message.trim() || 'Attachment',
+        content: this.message.trim() || '',
         file: this.selectedFile
       });
       this.message = '';

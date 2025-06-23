@@ -71,6 +71,11 @@ export class ChatService {
     return this.http.post(`${environment.apiUrl}`, { query });
   }
 
+  // Get users for a specific user (excluding blocked users)
+  getUsersForUser(userId: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl.replace('/graphql', '')}/api/users/for-user/${userId}`);
+  }
+
   getContactsList(userId: number): Observable<any> {
     const query = `
       query {
@@ -254,6 +259,12 @@ export class ChatService {
           read
           fileUrl
           fileType
+          fileName
+          isEncrypted
+          encryptedContent
+          encryptedAESKey
+          iv
+          signature
         }
       }
     `;
@@ -270,17 +281,18 @@ export class ChatService {
   
   // Method to send message
   sendMessage(message: Message): void {
-    console.log('Sending message with full details:', JSON.stringify(message, null, 2));
-    
+    console.log('Sending message:', message);
+
     const fileUrlPart = message.fileUrl ? `, fileUrl: "${message.fileUrl}"` : '';
     const fileTypePart = message.fileType ? `, fileType: "${message.fileType}"` : '';
-    
+    const fileNamePart = message.fileName ? `, fileName: "${message.fileName?.replace(/"/g, '\\"')}"` : '';
+
     const query = `
       mutation {
         sendMessage(
-          senderId: ${message.senderId}, 
-          receiverId: ${message.receiverId}, 
-          content: "${message.content.replace(/"/g, '\\"')}"${fileUrlPart}${fileTypePart}
+          senderId: ${message.senderId},
+          receiverId: ${message.receiverId},
+          content: "${message.content.replace(/"/g, '\\"')}"${fileUrlPart}${fileTypePart}${fileNamePart}
         ) {
           id
           senderId
@@ -290,23 +302,20 @@ export class ChatService {
           read
           fileUrl
           fileType
+          fileName
+          isEncrypted
         }
       }
     `;
-    
-    console.log('GraphQL query:', query);
-    
+
     this.http.post(`${environment.apiUrl}`, { query }).subscribe(
       (response: any) => {
-        console.log('Message sent response:', JSON.stringify(response, null, 2));
+        console.log('Message sent successfully');
         // Reload messages to include the new one
         this.loadMessages(message.senderId, message.receiverId);
       },
       error => {
-        console.error('Error sending message (detailed):', error);
-        console.error('Error status:', error.status);
-        console.error('Error message:', error.message);
-        console.error('Error response:', error.error);
+        console.error('Error sending message:', error);
       }
     );
   }
@@ -330,8 +339,10 @@ export class ChatService {
   // Method to create user
   createUser(name: string): Observable<any> {
     console.log('Creating user with name:', name);
+
     // Escape special characters in the name to prevent GraphQL injection
     const escapedName = name.replace(/"/g, '\\"');
+
     const query = `
       mutation {
         createUser(name: "${escapedName}") {
@@ -421,6 +432,57 @@ export class ChatService {
         })
       );
   }
+
+  // Blocked users management - Backend API methods
+
+  blockUser(blockerId: number, blockedId: number, reason?: string): Observable<any> {
+    const body = {
+      blockerId: blockerId,
+      blockedId: blockedId,
+      reason: reason || null
+    };
+    return this.http.post(`${environment.apiUrl.replace('/graphql', '')}/api/blocked-users/block`, body);
+  }
+
+  unblockUser(blockerId: number, blockedId: number): Observable<any> {
+    const body = {
+      blockerId: blockerId,
+      blockedId: blockedId
+    };
+    return this.http.post(`${environment.apiUrl.replace('/graphql', '')}/api/blocked-users/unblock`, body);
+  }
+
+  getBlockedUsers(userId: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl.replace('/graphql', '')}/api/blocked-users/${userId}/blocked`);
+  }
+
+  isUserBlocked(blockerId: number, blockedId: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl.replace('/graphql', '')}/api/blocked-users/check?blockerId=${blockerId}&blockedId=${blockedId}`);
+  }
+
+  isEitherUserBlocked(userId1: number, userId2: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl.replace('/graphql', '')}/api/blocked-users/check-mutual?userId1=${userId1}&userId2=${userId2}`);
+  }
+
+  // Method to refresh contacts (used when unblocking users)
+  refreshContacts(): void {
+    // This will trigger a reload of contacts in any component that subscribes to it
+    // We can emit an event or use a subject to notify components
+    console.log('Refreshing contacts...');
+
+    // For now, we'll use a simple approach - emit a refresh event
+    // Components listening to this can reload their contacts
+    this.contactsRefreshSubject.next(true);
+  }
+
+  // Add a subject for contact refresh events
+  private contactsRefreshSubject = new BehaviorSubject<boolean>(false);
+
+  getContactsRefresh(): Observable<boolean> {
+    return this.contactsRefreshSubject.asObservable();
+  }
+
+
 }
 
 

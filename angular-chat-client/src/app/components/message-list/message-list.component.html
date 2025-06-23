@@ -1,22 +1,112 @@
-<div class="message-list">
+<div class="message-list" #messageContainer>
   <div *ngIf="messages.length === 0" class="no-messages">
     <p>No messages yet. Start the conversation!</p>
   </div>
-  
-  <div *ngFor="let message of messages" 
-       class="message" 
+
+  <div *ngFor="let message of messages"
+       class="message"
        [class.sent]="message.senderId === currentUser?.id"
        [class.received]="message.senderId !== currentUser?.id">
     <div class="message-content">
-      {{ message.content }}
+      <div *ngIf="message.content && message.content.trim()" class="message-text">
+        {{ getMessageContent(message) }}
+        <i *ngIf="isMessageEncrypted(message)" class="encryption-icon fas fa-lock" title="End-to-end encrypted"></i>
+      </div>
       <div *ngIf="message.fileUrl" class="file-attachment">
-        <a [href]="message.fileUrl" target="_blank">
-          <i class="fas fa-file"></i> Attachment
-        </a>
+        <!-- Image Preview -->
+        <div *ngIf="isImageFile(message.fileType)" class="image-preview">
+          <div class="attachment-card">
+            <div class="media-container">
+              <img [src]="message.fileUrl" [alt]="message.content" (click)="openFileInNewTab(message.fileUrl)">
+              <button class="download-btn media-download" (click)="downloadFile(message.fileUrl, getFileName(message.fileUrl, message.fileName))">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Preview -->
+        <div *ngIf="isVideoFile(message.fileType)" class="video-preview">
+          <div class="attachment-card">
+            <div class="media-container">
+              <video controls [src]="message.fileUrl">
+                Your browser does not support the video tag.
+              </video>
+              <button class="download-btn media-download" (click)="downloadFile(message.fileUrl, getFileName(message.fileUrl, message.fileName))">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audio Preview -->
+        <div *ngIf="isAudioFile(message.fileType)" class="audio-preview">
+          <div class="attachment-card">
+            <audio controls [src]="message.fileUrl"></audio>
+            <div class="file-info">
+              <div class="file-details">
+                <i class="fas fa-music"></i>
+                <span>{{ getFileName(message.fileUrl, message.fileName) }}</span>
+              </div>
+              <button class="download-btn" (click)="downloadFile(message.fileUrl, getFileName(message.fileUrl, message.fileName))">
+                <i class="fas fa-download"></i>
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PDF Preview -->
+        <div *ngIf="isPdfFile(message.fileType)" class="pdf-preview">
+          <div class="attachment-card">
+            <div class="file-info">
+              <div class="file-details" (click)="openFileInNewTab(message.fileUrl)">
+                <i class="fas fa-file-pdf"></i>
+                <span>{{ getFileName(message.fileUrl, message.fileName) }}</span>
+              </div>
+              <button class="download-btn" (click)="downloadFile(message.fileUrl, getFileName(message.fileUrl, message.fileName))">
+                <i class="fas fa-download"></i>
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Document Preview -->
+        <div *ngIf="isDocumentFile(message.fileType)" class="document-preview">
+          <div class="attachment-card">
+            <div class="file-info">
+              <div class="file-details">
+                <i class="fas fa-file-alt"></i>
+                <span>{{ getFileName(message.fileUrl, message.fileName) }}</span>
+              </div>
+              <button class="download-btn" (click)="downloadFile(message.fileUrl, getFileName(message.fileUrl, message.fileName))">
+                <i class="fas fa-download"></i>
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Generic File Preview -->
+        <div *ngIf="!isImageFile(message.fileType) && !isVideoFile(message.fileType) && !isAudioFile(message.fileType) && !isPdfFile(message.fileType) && !isDocumentFile(message.fileType)" class="generic-file-preview">
+          <div class="attachment-card">
+            <div class="file-info">
+              <div class="file-details">
+                <i class="fas fa-file"></i>
+                <span>{{ getFileName(message.fileUrl, message.fileName) }}</span>
+              </div>
+              <button class="download-btn" (click)="downloadFile(message.fileUrl, getFileName(message.fileUrl, message.fileName))">
+                <i class="fas fa-download"></i>
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="message-time">
       {{ message.timestamp | date:'short' }}
     </div>
   </div>
-
+</div>

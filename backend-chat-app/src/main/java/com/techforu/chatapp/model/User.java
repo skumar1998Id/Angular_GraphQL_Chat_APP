@@ -12,6 +12,10 @@ public class User {
 
     private Boolean isOnline;
 
+    // Add public key for end-to-end encryption
+    @Column(length = 4096) // RSA public keys can be large
+    private String publicKey;
+
     // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -19,4 +23,6 @@ public class User {
     public void setName(String name) { this.name = name; }
     public Boolean getIsOnline() { return isOnline; }
     public void setIsOnline(Boolean isOnline) { this.isOnline = isOnline; }
+    public String getPublicKey() { return publicKey; }
+    public void setPublicKey(String publicKey) { this.publicKey = publicKey; }
 }

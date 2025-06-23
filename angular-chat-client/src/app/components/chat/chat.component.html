@@ -3,16 +3,27 @@
     <div class="user-info">
       <div class="user-avatar">{{ currentUser.name?.charAt(0) || 'U' }}</div>
       <h3>{{ currentUser.name || 'User' }}</h3>
-      <button class="logout-btn" (click)="logout()">
-        <i class="fas fa-sign-out-alt"></i>
-      </button>
+      <div class="header-actions">
+        <button class="settings-btn" (click)="openSettings()" title="Settings">
+          <i class="fas fa-cog"></i>
+        </button>
+        <button class="logout-btn" (click)="logout()" title="Logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
     </div>
     <div class="search-box">
-      <input type="text" placeholder="Search contacts...">
-      <i class="fas fa-search"></i>
+      <input type="text"
+             placeholder="Search contacts..."
+             [(ngModel)]="searchQuery"
+             (input)="onSearchChange()">
+      <i class="fas fa-search search-icon"></i>
+      <button *ngIf="searchQuery" class="clear-search-btn" (click)="clearSearch()">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
-    <app-contact-list 
-      [contacts]="contacts" 
+    <app-contact-list
+      [contacts]="filteredContacts"
       [selectedContact]="selectedContact"
       (contactSelected)="onContactSelected($event)">
     </app-contact-list>
@@ -27,16 +38,17 @@
           <span class="status" [class.online]="selectedContact.isOnline">
             {{ selectedContact.isOnline ? 'Online' : 'Offline' }}
           </span>
+
         </div>
       </div>
       <div class="chat-actions">
-        <button class="action-btn call-btn" title="Voice call">
+        <button class="action-btn call-btn" title="Voice call" (click)="makeVoiceCall()">
           <i class="fas fa-phone"></i>
         </button>
-        <button class="action-btn video-btn" title="Video call">
+        <button class="action-btn video-btn" title="Video call" (click)="makeVideoCall()">
           <i class="fas fa-video"></i>
         </button>
-        <button class="action-btn info-btn" title="Contact info">
+        <button class="action-btn info-btn" title="Contact info" (click)="showContactInfo()">
           <i class="fas fa-info-circle"></i>
         </button>
       </div>
@@ -69,6 +81,55 @@
     </ng-template>
   </div>
 </div>
+
+<!-- User Details Modal -->
+<div *ngIf="showUserDetails && selectedContact" class="modal-overlay" (click)="hideContactInfo()">
+  <div class="user-details-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Contact Information</h3>
+      <button class="close-btn" (click)="hideContactInfo()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="user-avatar-large">
+        {{ selectedContact.name?.charAt(0) || 'C' }}
+      </div>
+
+      <div class="user-info">cd  g
+        
+        <h2>{{ selectedContact.name || 'Contact' }}</h2>
+        <div class="status-info">
+          <span class="status-indicator" [class.online]="selectedContact.isOnline"></span>
+          <span class="status-text">{{ selectedContact.isOnline ? 'Online' : 'Offline' }}</span>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="modal-action-btn call-btn" (click)="makeVoiceCall()">
+          <i class="fas fa-phone"></i>
+          Voice Call
+        </button>
+        <button class="modal-action-btn video-btn" (click)="makeVideoCall()">
+          <i class="fas fa-video"></i>
+          Video Call
+        </button>
+        <button class="modal-action-btn block-btn" (click)="blockUser()">
+          <i class="fas fa-ban"></i>
+          Block User
+        </button>
+      </div>
+    </div>
+  </div>cd  g
+  
+</div>
+
+<!-- Settings Component -->
+<app-settings
+  [showSettings]="showSettings"
+  (closeSettings)="closeSettings()">
+</app-settings>
 
 
 

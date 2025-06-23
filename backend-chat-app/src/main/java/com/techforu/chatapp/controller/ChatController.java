@@ -9,7 +9,9 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import reactor.core.publisher.Flux;
 import java.util.List;
 import java.util.Collections;
@@ -57,22 +59,31 @@ public class ChatController {
     
     @MutationMapping
     public Message sendMessage(
-        @Argument Long senderId, 
-        @Argument Long receiverId, 
+        @Argument Long senderId,
+        @Argument Long receiverId,
         @Argument String content,
-        @Argument(name = "fileUrl", value = "") String fileUrl,
-        @Argument(name = "fileType", value = "") String fileType
+        @Argument String fileUrl,
+        @Argument String fileType,
+        @Argument String fileName
     ) {
-        if (fileUrl != null && !fileUrl.isEmpty()) {
-            return messageService.sendMessage(senderId, receiverId, content, fileUrl, fileType);
-        } else {
-            return messageService.sendMessage(senderId, receiverId, content);
-        }
+        // Backend automatically handles encryption
+        return messageService.sendMessage(senderId, receiverId, content, fileUrl, fileType, fileName);
     }
     
     @MutationMapping
     public User createUser(@Argument String name) {
         return userService.createUser(name);
+    }
+
+    // REST endpoint to generate encryption keys for all existing users
+    @PostMapping("/api/generate-keys")
+    public ResponseEntity<String> generateKeysForAllUsers() {
+        try {
+            userService.generateKeysForAllUsers();
+            return ResponseEntity.ok("Encryption keys generated for all users successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error generating keys: " + e.getMessage());
+        }
     }
     
     @MutationMapping
