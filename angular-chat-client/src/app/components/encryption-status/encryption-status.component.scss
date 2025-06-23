@@ -1,0 +1,68 @@
+.encryption-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin: 8px 0;
+  
+  &.encrypted {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    
+    .status-text {
+      font-weight: 600;
+    }
+    
+    .encryption-info {
+      margin-left: auto;
+      opacity: 0.9;
+    }
+  }
+  
+  &.not-encrypted {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    
+    .status-text {
+      font-weight: 600;
+    }
+    
+    .encryption-warning {
+      margin-left: auto;
+      opacity: 0.9;
+    }
+  }
+  
+  i {
+    font-size: 14px;
+  }
+  
+  .status-text {
+    flex: 1;
+  }
+  
+  small {
+    font-size: 10px;
+    opacity: 0.8;
+  }
+}
+
+/* Animation for status changes */
+.encryption-status {
+  transition: all 0.3s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .encryption-status {
+    font-size: 11px;
+    padding: 6px 10px;
+    
+    .encryption-info,
+    .encryption-warning {
+      display: none; // Hide detailed info on mobile
+    }
+  }
+}

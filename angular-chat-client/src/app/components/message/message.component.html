@@ -1,0 +1,51 @@
+<div class="message" [ngClass]="{'own-message': isOwnMessage}">
+  <div class="message-content">
+    <!-- Message text -->
+    <div class="message-text">{{ message.content }}</div>
+    
+    <!-- File attachment display -->
+    <div *ngIf="message.fileUrl" class="attachment">
+      <!-- Image files -->
+      <div *ngIf="isImageFile(message.fileType)" class="image-container">
+        <img [src]="message.fileUrl" alt="Image" class="image-attachment" (click)="openImageInNewTab(message.fileUrl)">
+      </div>
+      
+      <!-- PDF files -->
+      <div *ngIf="isPdfFile(message.fileType)" class="pdf-container">
+        <iframe [src]="getSafeUrl(message.fileUrl)" class="pdf-viewer"></iframe>
+        <div class="file-info">
+          <i class="fas fa-file-pdf"></i>
+          <a [href]="message.fileUrl" target="_blank">View PDF</a>
+        </div>
+      </div>
+      
+      <!-- Video files -->
+      <div *ngIf="isVideoFile(message.fileType)" class="video-container">
+        <video controls class="video-player">
+          <source [src]="message.fileUrl" [type]="message.fileType">
+          Your browser does not support video playback.
+        </video>
+      </div>
+      
+      <!-- Audio files -->
+      <div *ngIf="isAudioFile(message.fileType)" class="audio-container">
+        <audio controls class="audio-player">
+          <source [src]="message.fileUrl" [type]="message.fileType">
+          Your browser does not support audio playback.
+        </audio>
+      </div>
+      
+      <!-- Other file types -->
+      <div *ngIf="!isImageFile(message.fileType) && !isPdfFile(message.fileType) && !isVideoFile(message.fileType) && !isAudioFile(message.fileType)" class="file-attachment">
+        <i class="fas" [ngClass]="getFileIcon(message.fileType)"></i>
+        <a [href]="message.fileUrl" target="_blank">
+          {{ getFileName(message.fileUrl) }}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="message-time">
+    {{ message.timestamp | date:'short' }}
+  </div>
+</div>
+

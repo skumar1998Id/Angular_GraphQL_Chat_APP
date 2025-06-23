@@ -1,0 +1,108 @@
+<!-- Settings Modal -->
+<div *ngIf="showSettings" class="modal-overlay" (click)="onCloseSettings()">
+  <div class="settings-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Settings</h3>
+      <button class="close-btn" (click)="onCloseSettings()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <!-- Tab Navigation -->
+      <div class="tab-navigation">
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'blocked'"
+          (click)="setActiveTab('blocked')">
+          <i class="fas fa-ban"></i>
+          Blocked Users
+        </button>
+        <button 
+          class="tab-btn" 
+          [class.active]="activeTab === 'general'"
+          (click)="setActiveTab('general')">
+          <i class="fas fa-cog"></i>
+          General
+        </button>
+      </div>
+      
+      <!-- Blocked Users Tab -->
+      <div *ngIf="activeTab === 'blocked'" class="tab-content">
+        <div class="section-header">
+          <h4>Blocked Users</h4>
+          <p class="section-description">Manage users you have blocked</p>
+        </div>
+        
+        <div *ngIf="blockedUsers.length === 0" class="empty-state">
+          <div class="empty-icon">
+            <i class="fas fa-user-check"></i>
+          </div>
+          <h5>No Blocked Users</h5>
+          <p>You haven't blocked any users yet.</p>
+        </div>
+        
+        <div *ngIf="blockedUsers.length > 0" class="blocked-users-list">
+          <div *ngFor="let user of blockedUsers" class="blocked-user-item">
+            <div class="user-info">
+              <div class="user-avatar">
+                {{ user.name?.charAt(0) || 'U' }}
+              </div>
+              <div class="user-details">
+                <h5>{{ user.name || 'Unknown User' }}</h5>
+                <p>User ID: {{ user.id }}</p>
+              </div>
+            </div>
+            <button class="unblock-btn" (click)="unblockUser(user)">
+              <i class="fas fa-unlock"></i>
+              Unblock
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- General Settings Tab -->
+      <div *ngIf="activeTab === 'general'" class="tab-content">
+        <div class="section-header">
+          <h4>General Settings</h4>
+          <p class="section-description">Configure your chat preferences</p>
+        </div>
+        
+        <div class="settings-group">
+          <div class="setting-item">
+            <div class="setting-info">
+              <h5>Notifications</h5>
+              <p>Receive notifications for new messages</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-info">
+              <h5>Online Status</h5>
+              <p>Show when you're online to other users</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div class="setting-info">
+              <h5>Read Receipts</h5>
+              <p>Let others know when you've read their messages</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
